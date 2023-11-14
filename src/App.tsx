@@ -1,45 +1,53 @@
 import React, {useState} from 'react';
 import Modal from './components/Modal/Modal';
 import {modalButton} from './types';
+import Alert from './components/Alert/Alert';
 
 const App: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<boolean>(true);
 
-  const openModal = () => {
-    console.log('modal open');
-    setShowModal(true);
+
+  const toggleModal = () => {
+    setShowModal((prevState) => !prevState);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const handleCancel = () => {
-    setShowModal(false);
-  };
-
-  const handleContinue = () => {
+  const toggleContinue = () => {
     alert('Continue button clicked');
-    setShowModal(false);
+    setShowModal((prevState) => !prevState);
   };
 
   const modalButtons: modalButton[] = [
-    {type: 'primary', label: 'Continue', onClick: handleContinue},
-    {type: 'danger', label: 'Close', onClick: handleCancel},
+    {type: 'primary', label: 'Continue', onClick: toggleContinue},
+    {type: 'danger', label: 'Close', onClick: toggleModal},
   ];
+
+  const closeAlert = () => {
+    console.log('Закрыть алерт');
+    setShowAlert((prevState) => !prevState);
+  };
 
   return (
     <div className="container mt-5">
-      <button className="btn btn-primary" onClick={openModal}>
+      <button className="btn btn-primary mb-5" onClick={toggleModal}>
         Model
       </button>
       <Modal
         show={showModal}
-        onClose={closeModal}
+        onClose={toggleModal}
         title="Some kinda modal title"
         body="This is modal content"
         buttons={modalButtons}
       />
+
+      {showAlert && (
+        <Alert type="warning" onDismiss={closeAlert}>
+          This is a warning type alert
+        </Alert>
+      )}
+      <Alert type="success">
+        This is a success type alert
+      </Alert>
     </div>
   );
 };
