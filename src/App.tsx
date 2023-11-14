@@ -5,8 +5,8 @@ import Alert from './components/Alert/Alert';
 
 const App: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [showAlert, setShowAlert] = useState<boolean>(true);
-
+  const [showWarningAlert, setShowWarningAlert] = useState<boolean>(true);
+  const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(true);
 
   const toggleModal = () => {
     setShowModal((prevState) => !prevState);
@@ -22,9 +22,12 @@ const App: React.FC = () => {
     {type: 'danger', label: 'Close', onClick: toggleModal},
   ];
 
-  const closeAlert = () => {
-    console.log('Закрыть алерт');
-    setShowAlert((prevState) => !prevState);
+  const closeWarningAlert = () => {
+    setShowWarningAlert((prevState) => !prevState);
+  };
+
+  const closeSuccessAlert = () => {
+    setShowSuccessAlert((prevState) => !prevState);
   };
 
   return (
@@ -40,14 +43,16 @@ const App: React.FC = () => {
         buttons={modalButtons}
       />
 
-      {showAlert && (
-        <Alert type="warning" onDismiss={closeAlert}>
+      {showWarningAlert && (
+        <Alert type="warning" onDismiss={closeWarningAlert}>
           This is a warning type alert
         </Alert>
       )}
-      <Alert type="success">
-        This is a success type alert
-      </Alert>
+      {showSuccessAlert && (
+        <Alert type="success" clickDismissable onDismiss={closeSuccessAlert}>
+          This is a success type alert
+        </Alert>
+      )}
     </div>
   );
 };
