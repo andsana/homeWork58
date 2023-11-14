@@ -15,12 +15,11 @@ const App: React.FC = () => {
   };
 
   const handleCancel = () => {
-    console.log('Cancel button clicked');
     setShowModal(false);
   };
 
   const handleContinue = () => {
-    console.log('Continue button clicked');
+    alert('Continue button clicked');
     setShowModal(false);
   };
 
